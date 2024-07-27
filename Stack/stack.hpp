@@ -8,6 +8,11 @@ template <typename T>
 Stack<T>::Stack(): numItems(0), cima(NULL){ }
 
 template <typename T>
+Stack<T>::Stack(const T& dato): numItems(1){
+  this->cima = new Nodo<T>(dato);
+}
+
+template <typename T>
 Stack<T>::Stack(const Stack<T>& pDer): cima(NULL), numItems(pDer.numItems){
 
   if(this != &pDer && pDer.numItems){
@@ -19,16 +24,10 @@ Stack<T>::Stack(const Stack<T>& pDer): cima(NULL), numItems(pDer.numItems){
       arr[i] = iterador->dato;
       iterador = iterador->sig;
     }
-
     for(size_t i = n; i > 0; i--)
       this->cima = new Nodo<T>(arr[i-1],this->cima);
     delete[] arr;
   }
-}
-
-template <typename T>
-Stack<T>::Stack(const T& dato): numItems(1){
-  this->cima = new Nodo<T>(dato);
 }
 
 template <typename T>
@@ -64,16 +63,20 @@ Stack<T>& Stack<T>::pop(){
   this->cima = this->cima->sig;
   this->numItems--;
   delete aux;
-
   return *this;
 }
 
 template <typename T>
 T Stack<T>::top() const{
-
-  if(!this->cima) return 0;
-
-  return this->cima->dato;
+  try{
+    if(!this->cima) throw -1;
+    return this->cima->dato;
+  }catch(const int& code){
+    switch(code){ 
+      case -1: std::cerr<<"\n\aTrying getting element with stack empty\n\n";
+    }
+  }
+  return T(0);
 }
 
 template <typename T>
@@ -99,14 +102,11 @@ Stack<T>& Stack<T>::operator = (const Stack<T>& pDer){
       arr[i] = iterador->dato; //primera iteracion guarda el dato de la cima p.ej {1,2,3,4,6,5}  el orden en que deben ser guardado es {5,6,4,3,2,1}
       iterador = iterador->sig;
     }
-
     for(size_t i = n; i > 0; i--) // itera sobre el arreglo desde la ultima posicion para que se guarde en el orden correcto
       this->cima = new Nodo<T>(arr[i-1],this->cima);
-    
     this->numItems = n;
     delete[] arr; // elimina memoria dinamica 
   }
-
   return *this; // retorna la referencia del objeto al que se le esta llamando la funcion
 }
 
@@ -117,7 +117,6 @@ T Stack<T>::operator [] (const size_t& j){
   for(int i = 0; iterador; i++, iterador = iterador->sig) 
     if(j == i) 
       return iterador->dato;
-      
   return this->cima->dato;
 }
 

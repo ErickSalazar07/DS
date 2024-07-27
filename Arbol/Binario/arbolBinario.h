@@ -29,7 +29,7 @@ public:
   bool find(const T&) const;
   bool empty() const;
   void clear();
-  void getRoot() const;
+  T getRoot() const;
   ArbolBin<T>& operator = (const ArbolBin&);
 }; 
 

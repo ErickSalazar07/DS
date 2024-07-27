@@ -1,5 +1,6 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
+#include <iostream>
 #include <cstdlib>
 #include "queue.h"
 
@@ -13,14 +14,12 @@ Queue<T>::Queue(const T& dato): numItems(1){
 
 template <typename T>
 Queue<T>::Queue(const Queue<T>& der): frt(NULL), bck(NULL), numItems(der.numItems){
- 
  if(this != &der && der.numItems){
     const Nodo<T>* iterador = der.frt;
     this->frt = this->bck = new Nodo<T>(iterador->dato);
     while(iterador = iterador->sig)
       this->bck = this->bck->sig = new Nodo<T>(iterador->dato);
   }
-
 }
 
 template <typename T>
@@ -35,16 +34,28 @@ Queue<T>::~Queue(){
 
 template <typename T>
 T Queue<T>::front(){
-  if(!this->frt) return T(0);
-
-  return this->frt->dato;
+  try{  
+    if(!this->frt) throw -1;
+    return this->frt->dato;
+  }catch(const int& code){
+    switch(code){ 
+      case -1: std::cerr<<"\a\nTrying to get front element from empty queue\n\n";
+    }
+  }
+  return T(0);
 }
 
 template <typename T>
 T Queue<T>::back(){
-  if(!this->bck) return T(0);
-
-  return this->bck->dato;
+  try{
+    if(!this->bck) throw -1;
+    return this->bck->dato;
+  }catch(const int& code){
+    switch(code){ 
+      case -1: std::cerr<<"\a\nTrying to get back element from empty queue\n\n";
+    }
+  }
+  return T(0);
 }
 
 template <typename T>
@@ -72,11 +83,8 @@ void Queue<T>::pop(){
 
 template <typename T>
 void Queue<T>::push(const T& dato){
-  if(this->frt)
-    this->bck = this->bck->sig = new Nodo<T>(dato);
-  else
-    this->frt = this->bck = new Nodo<T>(dato);
-
+  if(this->frt) this->bck = this->bck->sig = new Nodo<T>(dato);
+  else this->frt = this->bck = new Nodo<T>(dato);
   numItems++;
 }
 
@@ -102,7 +110,6 @@ Queue<T>& Queue<T>::operator = (const Queue<T>& der){
       this->bck = this->bck->sig = new Nodo<T>(iterador->dato);
     this->numItems = der.numItems;
   }
-
   return *this;
 }
 

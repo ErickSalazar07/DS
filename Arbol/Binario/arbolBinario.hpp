@@ -28,7 +28,6 @@ ArbolBin<T>::ArbolBin(const ArbolBin<T>& arbDer): numItems(arbDer.numItems), roo
 template <typename T>
 void ArbolBin<T>::clear(){
   if(!this->root) return;
-  
   this->deleteTree(this->root);
   this->numItems = 0;
 }
@@ -129,7 +128,6 @@ ArbolBin<T>& ArbolBin<T>::operator = (const ArbolBin<T>& arbDer){
   if(this != &arbDer){
     this->clear(); 
     if(!arbDer.root) return *this;
-
     Queue<const NodoBin<T>* const> cola(arbDer.root);
     
     while(!cola.empty()){
@@ -159,9 +157,16 @@ size_t ArbolBin<T>::size() const{
 }
 
 template <typename T>
-void ArbolBin<T>::getRoot() const{
-  if(!this->root){ std::cout<<"\a\nNo hay elementos en el arbol\n\n"; return; }
-  std::cout<<"ROOT = "<<this->root->dato<<'\n';
+T ArbolBin<T>::getRoot() const{
+  try{
+    if(!this->root) throw -1;
+    return this->root->dato;
+  }catch(const int& code){
+    switch(code){
+      case -1: std::cerr<<"\a\nTrying to get root from empty BST\n\n";
+    }
+  }
+  return T(0);
 }
 
 #endif
