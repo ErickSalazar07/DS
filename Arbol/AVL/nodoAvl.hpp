@@ -6,18 +6,14 @@
 #include "nodoAvl.h"
 
 template <typename T>
-NodoAVL<T>::NodoAVL(const T& data, const NodoAVL<T>* izq, const NodoAVL<T>* der, const size_t& h): data(data), h(h), izq(izq), der(der){ }
+NodoAVL<T>::NodoAVL(const T& data, const NodoAVL<T>* izq, const NodoAVL<T>* der): data(data), izq(izq), der(der){ }
 
 template <typename T>
-void NodoAVL<T>::insert(const T& data, NodoAVL<T>*& node){
+void NodoAVL<T>::insert(const T& data, NodoAVL<T>*& node, NodoAVL<T>* const padre){
   if(!node){ node = new NodoAVL<T>(data); return; } 
-  else if(node->data > data) this->insert(data, node->izq);
-  else if(node->data < data) this->insert(data, node->der);
-
-  // se calcula la altura para la recursividad menos para el nodo que se inserto
-
-  node->h = this->heigth(node);
-  this->balance(node);
+  else if(node->data > data) this->insert(data, node->izq, node);
+  else if(node->data < data) this->insert(data, node->der, node);
+  this->balance(node, padre);
 }
 
 template <typename T>
@@ -25,8 +21,6 @@ void NodoAVL<T>::pop(const T& data, NodoAVL<T>* node, NodoAVL<T>* padre){
   if(node->data > data) this->pop(data, node->izq, node);
   else if(node->data < data) this->pop(data, node->der, node);
   else this->eraseNode(node, padre);
-
-
 }
 
 template <typename T>
@@ -109,23 +103,24 @@ void NodoAVL<T>::nivelOrden(const std::vector<T>& vec, const NodoAVL<T>* const n
 }
 
 template <typename T>
-int NodoAVL<T>::heigth(){
-  if(this->izq && this->der) return this->max(this->heigth(this->izq), this->heigth(this->der));
+int NodoAVL<T>::heigth() const{
+  if(this->izq && this->der) return 1 + this->max(this->heigth(this->izq), this->heigth(this->der));
   else if(this->izq) return 1 + this->heigth(this->izq);
   else if(this->der) return 1 + this->heigth(this->der);
   else return 0;
 }
 
 template <typename T>
-int NodoAVL<T>::heigth(const NodoAVL<T>* const node){
-  if(node->izq && node->der) return max(heigth(node->izq), heigth(node->der));
+int NodoAVL<T>::heigth(const NodoAVL<T>* const node) const{
+  if(!node) return -1; // is an empty node -> leaf(node) = 0; null(node) = -1;
+  if(node->izq && node->der) return 1 + max(heigth(node->izq), heigth(node->der));
   else if(node->izq) return 1 + heigth(node->izq);
   else if(node->der) return 1 + heigth(node->der);
   else return 0;
 }
 
 template <typename T>
-int NodoAVL<T>::max(const int& num1, const int& num2){
+int NodoAVL<T>::max(const int& num1, const int& num2){ // function that returns the maximum value of two integers
   return num1 > num2 ? num1 : num2;
 }
 
@@ -149,34 +144,50 @@ bool NodoAVL<T>::find(const T& data, const NodoAVL<T>* const node) const{
 }
 
 template <typename T>
-void balance(const NodoAVL<T>* node){
-  if(node->izq->h - node->der->h) // implementation of the conditions to know when the node is disbalanced
+void NodoAVL<T>::balance(NodoAVL<T>* const node, NodoAVL<T>* const padre){ // implementation of the conditions to know when the node is disbalanced
+  if(node->izq->heigth() - node->der->heigth() > 1){ // heavy weighted on left 
+    if(node->izq->izq->heigth() - node->izq->der->heigth() < 0) // leftRightRotation 
+      padre->izq == node ? padre->izq = this->leftRightRot(node) : padre->der = this->leftRightRot(node);
+    else // rightRotation
+      padre->izq == node ? padre->izq = this->rightRot(node) : padre->der = this->rightRot(node);
+  }else if(node->izq->h - node->der->h < -1){ // heavy weighted on right
+    if(node->der->izq->heigth() - node->der->der->heigth() > 0) // rightLeftRotation
+      padre->izq == node ? padre->izq = this->rightLeftRot(node) : padre->der = this->rightLeftRot(node);
+    else // leftRotation
+      padre->izq == node ? padre->izq = this->leftRot(node) : padre->der = this->leftRot(node);
+  }
 }
 
 template <typename T>
 NodoAVL<T>* NodoAVL<T>::leftRot(const NodoAVL<T>* const node){
-  NodoAVL<T>* auxDer = node->der;
-  node->der = auxDer->izq;
-  auxDer->izq = node;
-  return auxDer;
+  NodoAVL<T>* aux = node->der;
+  node->der = aux->izq;
+  aux->izq = node;
+  return aux;
 }
 
 template <typename T>
 NodoAVL<T>* NodoAVL<T>::rightRot(const NodoAVL<T>* const node){
-  NodoAVL<T>* auxIzq = node->izq;
-  node->izq = auxIzq->der;
-  auxIzq->der = node;
-  return auxIzq;
+  NodoAVL<T>* aux = node->izq;
+  node->izq = aux->der;
+  aux->der = node;
+  return aux;
 }
 
 template <typename T>
 NodoAVL<T>* NodoAVL<T>::rightLeftRot(const NodoAVL<T>* const node){
-  return node->izq;
+  NodoAVL<T>* aux = this->rightRot(node->der);
+  node->der = aux->izq;
+  aux->izq = node;
+  return aux;
 }
 
 template <typename T>
 NodoAVL<T>* NodoAVL<T>::leftRightRot(const NodoAVL<T>* const node){
-  return node->der;
+  NodoAVL<T>* aux = this->leftRot(node->izq);
+  node->izq = aux->der;
+  aux->der = node;
+  return aux;
 }
 
 #endif // NODO_AVL_HPP

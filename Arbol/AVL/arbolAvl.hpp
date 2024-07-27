@@ -34,9 +34,12 @@ void ArbolAVL<T>::clear(){
 
 template <class T>
 void ArbolAVL<T>::insert(const T& data){
+  if(this->root->find(data, this->root)) return;
+  
   if(!this->raiz) this->raiz = new NodoAVL<T>(data);
   else if(this->raiz > data) this->raiz->insert(data,this->raiz->izq);
   else if(this->raiz < data) this->raiz->insert(data, this->raiz->der);
+  this->numItems++;
 }
 
 template <class T>
@@ -94,6 +97,12 @@ template <class T>
 void ArbolAVL<T>::getRoot() const{
   if(!this->root) std::cout<<"\a\nEl arbol no tiene elementos\n\n";
   else std::cout<<"ROOT = "<<this->root->data;
+}
+
+template <class T>
+int ArbolAVL<T>::heigth() const{
+  if(!this->root) return -1;
+  return this->root->heigth();
 }
 
 #endif // ARBOL_AVL_HPP
