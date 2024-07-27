@@ -6,7 +6,7 @@ template <class T>
 ArbolAVL<T>::ArbolAVL(): root(NULL), numItems(0){}
 
 template <class T>
-ArbolAVL<T>::ArbolAVL(const T& data): root(data), numItems(1){}
+ArbolAVL<T>::ArbolAVL(const T& data): root(new NodoAVL<T>(data)), numItems(1){}
 
 template <class T>
 ArbolAVL<T>::ArbolAVL(const ArbolAVL<T>& arbDer){

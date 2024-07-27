@@ -6,7 +6,7 @@
 template <typename T>
 class ArbolBin{
 private:
-  NodoBin<T>* raiz;
+  NodoBin<T>* root;
   size_t numItems;
 protected:
   void deleteTree(NodoBin<T>*&);
@@ -29,7 +29,7 @@ public:
   bool find(const T&) const;
   bool empty() const;
   void clear();
-  void root() const;
+  void getRoot() const;
   ArbolBin<T>& operator = (const ArbolBin&);
 }; 
 
