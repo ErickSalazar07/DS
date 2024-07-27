@@ -145,17 +145,16 @@ bool NodoAVL<T>::find(const T& data, const NodoAVL<T>* const node) const{
 
 template <typename T>
 void NodoAVL<T>::balance(NodoAVL<T>* const node, NodoAVL<T>* const padre){ // implementation of the conditions to know when the node is disbalanced
-  if(node->izq->heigth() - node->der->heigth() > 1){ // heavy weighted on left 
+  if(node->izq->heigth() - node->der->heigth() > 1) // heavy weighted on left 
     if(node->izq->izq->heigth() - node->izq->der->heigth() < 0) // leftRightRotation 
       padre->izq == node ? padre->izq = this->leftRightRot(node) : padre->der = this->leftRightRot(node);
     else // rightRotation
       padre->izq == node ? padre->izq = this->rightRot(node) : padre->der = this->rightRot(node);
-  }else if(node->izq->h - node->der->h < -1){ // heavy weighted on right
+  else if(node->izq->h - node->der->h < -1) // heavy weighted on right
     if(node->der->izq->heigth() - node->der->der->heigth() > 0) // rightLeftRotation
       padre->izq == node ? padre->izq = this->rightLeftRot(node) : padre->der = this->rightLeftRot(node);
     else // leftRotation
       padre->izq == node ? padre->izq = this->leftRot(node) : padre->der = this->leftRot(node);
-  }
 }
 
 template <typename T>
