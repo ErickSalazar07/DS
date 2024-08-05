@@ -75,8 +75,8 @@ T Stack<T>::top() const{
     switch(code){ 
       case -1: std::cerr<<"\n\aTrying getting element with stack empty\n\n";
     }
+    return T();
   }
-  return T(0);
 }
 
 template <typename T>
@@ -117,7 +117,7 @@ T Stack<T>::operator [] (const size_t& j){
   for(int i = 0; iterador; i++, iterador = iterador->sig) 
     if(j == i) 
       return iterador->dato;
-  return this->cima->dato;
+  return T();
 }
 
 #endif // STACK_HPP

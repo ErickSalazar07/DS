@@ -27,15 +27,15 @@ private:
   bool leaf() const;
   bool leaf(const NodoAVL* const) const;
   bool find(const T&, const NodoAVL* const) const;
-  int max(const int&, const int&); // Maximo entre dos valores numericos
-  void balance(NodoAVL* const, NodoAVL* const);
-  NodoAVL* leftRot(const NodoAVL* const);
-  NodoAVL* rightRot(const NodoAVL* const);
-  NodoAVL* leftRightRot(const NodoAVL* const);
-  NodoAVL* rightLeftRot(const NodoAVL* const);
+  int max(const int&, const int&) const; // Maximo entre dos valores numericos
+  void balance(NodoAVL* , NodoAVL*);
+  NodoAVL* leftRot(NodoAVL*);
+  NodoAVL* rightRot(NodoAVL*);
+  NodoAVL* leftRightRot(NodoAVL*);
+  NodoAVL* rightLeftRot(NodoAVL*);
 protected:
 public:
-  NodoAVL(const T&, const NodoAVL* = NULL, const NodoAVL* = NULL);
+  NodoAVL(const T&, NodoAVL* = NULL, NodoAVL* = NULL);
   ~NodoAVL();
 };
 

@@ -31,8 +31,10 @@ public:
   bool empty() const;
   int heigth() const;
   void clear();
-  void getRoot() const;
+  T getRoot() const;
   ArbolAVL<T>& operator = (const ArbolAVL&);
 };
 
-#endif ARBOL_AVL_H
+#include "arbolAvl.hpp"
+
+#endif // ARBOL_AVL_H

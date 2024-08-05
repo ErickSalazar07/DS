@@ -41,8 +41,8 @@ T Queue<T>::front(){
     switch(code){ 
       case -1: std::cerr<<"\a\nTrying to get front element from empty queue\n\n";
     }
+    return T();
   }
-  return T(0);
 }
 
 template <typename T>
@@ -54,8 +54,8 @@ T Queue<T>::back(){
     switch(code){ 
       case -1: std::cerr<<"\a\nTrying to get back element from empty queue\n\n";
     }
+    return T();
   }
-  return T(0);
 }
 
 template <typename T>

@@ -56,7 +56,7 @@ void ArbolBin<T>::insert(const T& dato){ // Function that makes recursively the 
 
 template <typename T>
 void ArbolBin<T>::pop(const T& dato){
-
+  if(!this->root){ std::cerr<<"\a\nThe root is NULL. Enter items\n\n"; return;}
   if(!this->root->find(dato , this->root)){ std::cerr<<"\n\nThe data: "<<dato<<" wasn't find\n\n"; return;}
 
   if(dato == this->root->dato){ // It searches for the max node in the minimum set of nodes starting at the getRoot node which will be deleted
@@ -163,10 +163,10 @@ T ArbolBin<T>::getRoot() const{
     return this->root->dato;
   }catch(const int& code){
     switch(code){
-      case -1: std::cerr<<"\a\nTrying to get root from empty BST\n\n";
+      case -1: std::cerr<<"\a\nTrying to get root from empty BST\n\n"; break;
     }
+    return T(); 
   }
-  return T(0);
 }
 
 #endif
