@@ -9,7 +9,7 @@ template <typename T>
 ArbolBin<T>::ArbolBin(): numItems(0), root(NULL){ }
 
 template <typename T>
-ArbolBin<T>::ArbolBin(const T& data): numItems(1), root(new NodoBin<T>(data)){}
+ArbolBin<T>::ArbolBin(const T& data): root(new NodoBin<T>(data)), numItems(1) {}
 
 template <typename T>
 ArbolBin<T>::ArbolBin(const ArbolBin<T>& arbDer): numItems(arbDer.numItems), root(NULL){ // copy constructor
