@@ -1,12 +1,13 @@
-FLAGS = -std=c++11 -Werror -o main # These are the flags for the .cpp files, and you can add more
-COMP = g++ $(FLAGS)
+CPPFLAGS = -std=c++11 -Wall -Werror # These are the flags for the .cpp files, and you can add more
+CFLAGS = -std=c11 -Wall -Werror # These are the flags for the .c files, and you can add more
+CPPCOMP = g++ $(CPPFLAGS)
+CCOMP = gcc $(CFLAGS)
 
-all: compile
+all: 
+	@printf "\nNot defined\n"
 
-compile: main.cpp 
-	@echo "Compilacion exitosa"
-	@$(COMP) main.cpp 
+compile_test_c: test/test.c C/List/ListSim.c
+	@$(CCOMP) -o main test/test.c C/List/ListSim.c
 
 clean:
-	@echo "Se removieron los archivos"
-	@rm main
+	@printf "\nNot defined\n"
