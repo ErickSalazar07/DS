@@ -1,13 +1,20 @@
 #ifndef STACK_H
 #define STACK_H
+#include <stdbool.h>
 
 struct Node{
-  Node* next;
+  struct Node* next;
   int data;
 };
 
 struct Stack{
-  Node* cima; 
+  struct Node* cima; 
+  int numItems;
 };
+
+void init(struct Stack*);
+bool empty(struct Stack);
+void pop(struct Stack*);
+void push(struct Stack*,int);
 
 #endif // STACK_H
