@@ -35,4 +35,5 @@ public:
   ArbolAVL<T>& operator = (const ArbolAVL&);
 };
 
-#endif ARBOL_AVL_H
+#include "arbolAvl.hpp"
+#endif //  ARBOL_AVL_H

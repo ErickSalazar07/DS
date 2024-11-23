@@ -36,9 +36,9 @@ template <class T>
 void ArbolAVL<T>::insert(const T& data){
   if(this->root->find(data, this->root)) return;
   
-  if(!this->raiz) this->raiz = new NodoAVL<T>(data);
-  else if(this->raiz > data) this->raiz->insert(data,this->raiz->izq);
-  else if(this->raiz < data) this->raiz->insert(data, this->raiz->der);
+  if(!this->root) this->root = new NodoAVL<T>(data);
+  else if(this->root->data > data) this->root->insert(data,this->root->izq);
+  else if(this->root->data < data) this->root->insert(data, this->root->der);
   this->numItems++;
 }
 

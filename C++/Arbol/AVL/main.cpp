@@ -1,6 +1,5 @@
 #include <iostream>
-#include "Queue/queue.h"
-#include "Arbol/AVL/arbolAvl.h"
+#include "arbolAvl.h"
 
 int main(){
   ArbolAVL<int> arbol;
