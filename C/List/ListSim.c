@@ -7,35 +7,79 @@ void initListSim(struct ListSim* lista) {
   lista->numNodes = 0;
 }
 
-void push(struct ListSim* lista, int data) {
+void pushFront(struct ListSim* lista, int data) {
+  struct Node1D* newNode = malloc(sizeof(struct Node1D));
+  
+  if(newNode == NULL) { perror("\n\nError alocating memory for node.\n\n"); exit(-1); }
 
-  if(empty(lista->begin)) {
-    lista->begin = malloc(sizeof(struct Node1D));
-    lista->begin->data = data;
+  newNode->data = data;
+  newNode->next = lista->begin;
+  lista->begin = newNode;
+  lista->numNodes++;
+}
+
+void pushBack(struct ListSim* lista, int data) {
+  struct Node1D* newNode = malloc(sizeof(struct Node1D));
+
+  if(newNode == NULL) { perror("\n\nError alocating memory for node.\n\n"); exit(-1); }
+  newNode->data = data;
+  newNode->next = NULL;
+
+  if(empty(lista)) {
+    lista->begin = newNode;
+    lista->numNodes++;
     return;
   }
 
-  struct Node1D* newNode = malloc(sizeof(struct Node1D));  
-  struct Node1D* it; // iterator list
-  newNode->data = data;
-
-  for(it = lista->begin; it->next; it = it->next);
-
-  newNode->next = it->next;
+  struct Node1D* it;
+  for(it = lista->begin; it->next != NULL; it = it->next);
+  
   it->next = newNode;
   lista->numNodes++;
 }
 
-/*void pop(struct ListSim* lista) {
+void popFront(struct ListSim* lista) {
+  if(empty(lista)) { printf("\nCan not remove front of List. Is Empty\n"); return; }
+  
+  struct Node1D* auxRm = lista->begin;
+  lista->begin = lista->begin->next;
+  free((void*)auxRm);
+  lista->numNodes--;
+}
 
-}*/
+void popBack(struct ListSim* lista) {
+  if(empty(lista)) { printf("\nCan not remove back of List. Is Empty\n"); return; }
 
-bool empty(struct Node1D* node) {
+  if(!lista->begin->next) {
+    free((void*)lista->begin);
+    lista->begin = NULL;
+    lista->numNodes = 0;
+    return;
+  }
+
+  struct Node1D* auxPrev, *auxRm;
+
+  auxPrev = auxRm = lista->begin;
+  while(auxRm->next != NULL) {
+    auxPrev = auxRm;
+    auxRm = auxRm->next;
+  }
+
+  free((void*)auxRm);
+  auxPrev->next = NULL;
+  lista->numNodes--;
+}
+
+bool empty(struct ListSim* lista) {
+  return lista->begin == NULL;
+}
+
+bool emptyN(struct Node1D* node) {
   return node == NULL;
 }
 
 bool find(struct ListSim* lista, int data) {
-  if(empty(lista->begin)) return false;
+  if(empty(lista)) return false;
 
   struct Node1D* it; // list iterator
 
@@ -45,29 +89,32 @@ bool find(struct ListSim* lista, int data) {
 }
 
 void clear(struct ListSim* lista) {
-  if(empty(lista->begin)) { printf("\nList already clear\n"); return; }
+  if(empty(lista)) { printf("\nList already clear\n"); return; }
 
   struct Node1D* auxRm;
 
   while(lista->begin) {
     auxRm = lista->begin;
     lista->begin = lista->begin->next;
-    free(auxRm);
+    free((void*)auxRm);
   }
   lista->numNodes = 0;
 }
 
+void removeN(struct ListSim* lista, unsigned int index) {
+  return;
+}
+
 void showItems(struct ListSim* lista) {
-  if(empty(lista->begin)) { printf("\n\nNo Items to display\n\n"); return; }
+  if(empty(lista)) { printf("\n\nNo Items to display\n\n"); return; }
 
   struct Node1D* it = lista->begin; // list iterator 
 
   for(it = lista->begin; it; it = it->next) 
-    printf("%i%c",it->data,(empty(it->next) ? '\n' : ','));
-  
+    printf("%i%c",it->data,(emptyN(it->next) ? '\n' : ','));
 }
 
 unsigned int getNumNodes(struct ListSim* lista) {
-  if(empty(lista->begin)) return 0;
+  if(empty(lista)) return 0;
   return lista->numNodes;
 }
