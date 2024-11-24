@@ -18,12 +18,15 @@ struct ListSim { // simple linked list
 };
 
 void initListSim(struct ListSim*);
-void push(struct ListSim*, int);
-// void pop(struct ListSim*);
-// void remove(struct ListSim*, unsigned int);
+void pushFront(struct ListSim*, int);
+void pushBack(struct ListSim*, int);
+void popFront(struct ListSim*);
+void popBack(struct ListSim*);
+void removeN(struct ListSim*, unsigned int);
 void clear(struct ListSim*);
 unsigned int getNumNodes(struct ListSim*);
-bool empty(struct Node1D*);
+bool empty(struct ListSim*);
+bool emptyN(struct Node1D*);
 bool find(struct ListSim*, int);
 void showItems(struct ListSim*);
 
