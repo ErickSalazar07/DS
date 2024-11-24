@@ -35,10 +35,11 @@ void NodoBin<T>::pop(const T& dato, NodoBin<T>*& nodo){
 
 template <typename T>
 void NodoBin<T>::pop(const T& dato, NodoBin<T>* nodo, NodoBin<T>* padre){
-  if(nodo)
+  if(nodo){
     if(nodo->dato > dato) this->pop(dato, nodo->izq, nodo);
     else if(nodo->dato < dato) this->pop(dato, nodo->der, nodo);
-    else this->eraseNode(nodo, padre);
+    else this->eraseNode(nodo, padre);  
+  }
 }
 
 template <typename T>
@@ -114,10 +115,11 @@ bool NodoBin<T>::leaf() const{
 
 template <typename T>
 bool NodoBin<T>::find(const T& dato, const NodoBin<T>* const nodo) const{
-  if(nodo)
+  if(nodo){
     if(dato < nodo->dato) return this->find(dato, nodo->izq);
     else if(dato > nodo->dato) return this->find(dato, nodo->der);
     else return true;
+  }
   return false;
 }
 
