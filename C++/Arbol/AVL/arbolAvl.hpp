@@ -36,9 +36,9 @@ template <class T>
 void ArbolAVL<T>::insert(const T& data){
   if(this->root->find(data, this->root)) return;
   
-  if(!this->raiz) this->raiz = new NodoAVL<T>(data);
-  else if(this->raiz > data) this->raiz->insert(data,this->raiz->izq);
-  else if(this->raiz < data) this->raiz->insert(data, this->raiz->der);
+  if(!this->root) this->root = new NodoAVL<T>(data);
+  else if(this->root->data > data) this->root->insert(data,this->root->izq, this->root);
+  else if(this->root->data < data) this->root->insert(data, this->root->der, this->root);
   this->numItems++;
 }
 
@@ -54,28 +54,80 @@ void ArbolAVL<T>::pop(const T& data){
   this->numItems--;
 }
 
-template <class T>
+template <typename T>
 void ArbolAVL<T>::inOrden() const{
-  if(this->root) this->root->inOrden();
-  else std::cout<<"\a\ninOrden(): No hay elementos en el arbol\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tIN ORDEN\n\n";
+  this->root->inOrden(this->root);
+  std::cout.put('\n');
 }
 
-template <class T>
+template <typename T>
+void ArbolAVL<T>::inOrden(std::vector<T>& vec) {
+  if(!this->root) {
+    std::cerr<<"\nThe tree is empty.\n";
+    vec.clear();
+    return;
+  }
+  vec.clear();
+  this->root->inOrden(vec,root);
+}
+
+template <typename T>
 void ArbolAVL<T>::preOrden() const{
-  if(this->root) this->root->preOrden();
-  else std::cout<<"\a\npreOrden(): No hay elementos en el arbol\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tPRE ORDEN\n\n";
+  this->root->preOrden(this->root);
+  std::cout.put('\n');
 }
 
-template <class T>
+template <typename T>
+void ArbolAVL<T>::preOrden(std::vector<T>& vec) {
+  if(!this->root) {
+    std::cerr<<"\nThe tree is empty.\n";
+    vec.clear();
+    return;
+  }
+  vec.clear();
+  this->root->preOrden(vec,root);
+}
+
+template <typename T>
 void ArbolAVL<T>::posOrden() const{
-  if(this->root) this->root->posOrden();
-  else std::cout<<"\a\nposOrden(): No hay elementos en el arbol\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tPOS ORDEN\n\n";
+  this->root->posOrden(this->root);
+  std::cout.put('\n');
 }
 
-template <class T>
+template <typename T>
+void ArbolAVL<T>::posOrden(std::vector<T>& vec) {
+  if(!this->root) {
+    std::cerr<<"\nThe tree is empty.\n";
+    vec.clear();
+    return;
+  }
+  vec.clear();
+  this->root->posOrden(vec,root);
+}
+
+template <typename T>
 void ArbolAVL<T>::nivelOrden() const{
-  if(this->root) this->root->nivelOrden();
-  else std::cout<<"\a\nnivelOrden(): No hay elementos en el arbol\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tNIVEL ORDEN\n\n";
+  this->root->nivelOrden(this->root);
+  std::cout.put('\n');
+}
+
+template <typename T>
+void ArbolAVL<T>::nivelOrden(std::vector<T>& vec) {
+  if(!this->root) {
+    std::cerr<<"\nThe tree is empty.\n";
+    vec.clear();
+    return;
+  }
+  vec.clear();
+  this->root->nivelOrden(vec,root);
 }
 
 template <class T>
