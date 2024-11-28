@@ -77,50 +77,58 @@ void ArbolBin<T>::pop(const T& dato){
 
 template <typename T>
 void ArbolBin<T>::inOrden() const{
-  if(this->root) this->root->inOrden(this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tIN ORDEN\n\n";
+  this->root->inOrden(this->root);
+  std::cout.put('\n');
 }
 
 template <typename T>
 void ArbolBin<T>::inOrden(Queue<T>& cola){
-  if(this->root) this->root->inOrden(cola, this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  this->root->inOrden(cola,this->root);
 }
 
 template <typename T>
 void ArbolBin<T>::preOrden() const{
-  if(this->root) this->root->preOrden(this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tPRE ORDEN\n\n";
+  this->root->preOrden(this->root);
+  std::cout.put('\n');
 }
 
 template <typename T>
 void ArbolBin<T>::preOrden(Queue<T>& cola){
-  if(this->root) this->root->preOrden(cola, this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  this->root->preOrden(cola,this->root);
 }
 
 template <typename T>
 void ArbolBin<T>::posOrden() const{
-  if(this->root) this->root->posOrden(this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tPOS ORDEN\n\n";
+  this->root->posOrden(this->root);
+  std::cout.put('\n');
 }
 
 template <typename T>
 void ArbolBin<T>::posOrden(Queue<T>& cola){
-  if(this->root) this->root->posOrden(cola, this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  this->root->posOrden(cola,this->root);
 }
 
 template <typename T>
 void ArbolBin<T>::nivelOrden() const{
-  if(this->root) this->root->nivelOrden(this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  std::cout<<"\n\t\t\tNIVEL ORDEN\n\n";
+  this->root->nivelOrden(this->root);
+  std::cout.put('\n');
 }
 
 template <typename T>
 void ArbolBin<T>::nivelOrden(Queue<T>& cola){
-  if(this->root) this->root->nivelOrden(cola, this->root);
-  else std::cout<<"El arbol esta vacio\n\n";
+  if(!this->root) { std::cout<<"\nEl arbol esta vacio, no se puede hacer \"in orden\".\n"; return; }
+  this->root->nivelOrden(cola,this->root);
 }
 
 template <typename T>

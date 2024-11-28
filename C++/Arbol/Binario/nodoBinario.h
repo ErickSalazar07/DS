@@ -1,11 +1,14 @@
 #ifndef NODO_BINARIO_H
 #define NODO_BINARIO_H
+#include "../../Queue/queue.h"
 
 template <typename T> class ArbolBin;
+template <typename T> class Queue;
 template <typename T>
 class NodoBin{
   friend class ArbolBin<T>;
 private:
+protected:
   T dato;
   NodoBin* izq;
   NodoBin* der;
@@ -23,7 +26,6 @@ private:
   void eraseNode(NodoBin*, NodoBin*);
   bool leaf() const;
   bool find(const T&, const NodoBin* const) const;
-protected:
 public:
   NodoBin(const T&, NodoBin* const = NULL, NodoBin* const = NULL);
   ~NodoBin();
